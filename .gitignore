@@ -1,0 +1,30 @@
+# Android specific
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+bin/
+gen/
+out/
+build/
+.gradle/
+local.properties
+
+# Logs and large binary files (ignoring huge logcat files)
+*.log
+logcat*.txt
+
+# IDEs and Editors
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
