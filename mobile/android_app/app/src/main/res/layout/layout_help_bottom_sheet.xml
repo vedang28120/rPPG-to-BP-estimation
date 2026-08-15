@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to Use This App"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#CCCCCC"
+            android:text="• Sit in a well-lit room with the light source in front of you (avoiding heavy shadows).\n• Keep the device steady at eye level.\n• Remain completely still for 7 seconds while the initial liveness and signal quality checks complete."
+            android:layout_marginBottom="24dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Glossary of Vitals"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#CCCCCC"
+            android:text="• Blood Pressure (BP): Measured in mmHg (Systolic/Diastolic). The pressure of circulating blood against the walls of blood vessels.\n\n• Heart Rate (HR): Measured in Beats Per Minute (BPM).\n\n• BVP Waveform: Blood Volume Pulse. The live optical signal representing micro-color variations in the skin caused by cardiac cycles.\n\n• Mean Arterial Pressure (MAP): The average pressure in the arteries during a single cardiac cycle.\n\n• Heart Rate Variability (HRV): Measured in milliseconds (RMSSD). The fluctuation in the time intervals between adjacent heartbeats.\n\n• Respiration Rate (RR): Measured in breaths per minute."
+            android:layout_marginBottom="24dp"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#2A1B1B"
+            app:cardCornerRadius="8dp"
+            app:strokeColor="#D32F2F"
+            app:strokeWidth="1dp"
+            android:layout_marginBottom="24dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+                
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medical Disclaimer"
+                    android:textColor="#FF5252"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+                    
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFCDD2"
+                    android:textSize="13sp"
+                    android:text="Disclaimer: This app is an experimental prototype, not a medical device. It cannot diagnose or treat any health conditions. Please do not use it as a replacement for professional medical advice or real blood pressure monitors."/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333"
+            android:layout_marginBottom="16dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credits &amp; Acknowledgements"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp"
+            android:text="Developed by: Vedang Bhatt\nCore Algorithm: Plane-Orthogonal-to-Skin (POS) by Wang et al.\nMachine Learning Models: Trained on the MIMIC-III Clinical Database (PhysioNet).\nFacial Tracking: Google MediaPipe Tasks Vision."
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

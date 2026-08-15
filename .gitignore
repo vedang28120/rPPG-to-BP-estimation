@@ -1,30 +1,85 @@
-# Android specific
-*.apk
-*.ap_
-*.aab
-*.dex
-*.class
+# ==============================================================================
+# Security & Secret Protection (.gitignore)
+# ==============================================================================
+
+# API Keys, Tokens & Credentials
+.env
+.env.*
+*.env
+*token*
+*secret*
+*credentials*.json
+*.pem
+*.key
+*.p12
+*.keystore
+*.jks
+
+# Android Local Properties & User SDK Paths (Contains private host paths)
+local.properties
+**/local.properties
+gradle.properties.local
+
+# Build Caches, Intermediates & Gradle Output
+.gradle/
+**/.gradle/
+.kotlin/
+**/.kotlin/
+build/
+**/build/
 bin/
 gen/
 out/
-build/
-.gradle/
-local.properties
+*.dex
+*.class
+*.ap_
 
-# Logs and large binary files (ignoring huge logcat files)
-*.log
+# Large Mobile Binaries & Backup Artifacts (>100MB GitHub limit)
+*.apk
+*.aab
+scrcpy/
+scrcpy.zip
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Device Logs, System Traces & Crash Dumps (Contains hardware serials & raw system memory)
 logcat*.txt
+logcat*.log
+camera_dump.txt
+log.txt
+*.log
+*_crash*.txt
+*_dump*.txt
 
-# IDEs and Editors
-.idea/
-*.iml
-.vscode/
-.DS_Store
-
-# Python
+# Python Virtual Environments & Bytecode
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 .venv/
 venv/
 ENV/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+*.ipynb_checkpoints/
+
+# IDE, OS & Editor Artifacts
+.idea/
+**/.idea/
+*.iml
+**/*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# Temporary & Archival Directories
+scratch/
+_archive/
+tmp/
