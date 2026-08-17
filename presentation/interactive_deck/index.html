@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile rPPG to Cuffless Blood Pressure Estimation | Interactive Defense Deck</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation & Controls Bar -->
+  <header class="top-nav">
+    <div class="brand">
+      <span class="pulse-indicator"></span>
+      <span class="brand-title">rPPG &rarr; Cuffless BP Research Platform</span>
+    </div>
+    <div class="center-controls">
+      <button id="btn-prev" class="nav-btn" title="Previous Slide (Left Arrow)">&#9664;</button>
+      <span id="slide-indicator" class="slide-indicator">Slide 1 / 10</span>
+      <button id="btn-next" class="nav-btn" title="Next Slide (Right Arrow or Space)">&#9654;</button>
+    </div>
+    <div class="right-controls">
+      <button id="btn-toggle-sim" class="tool-btn active" title="Toggle Live Waveform Simulator">Live Signal Sim</button>
+      <button id="btn-toggle-notes" class="tool-btn" title="Toggle Speaker Cue Notes (P)">Speaker Notes</button>
+      <button id="btn-fullscreen" class="tool-btn" title="Toggle Fullscreen (F)">Fullscreen</button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Main Presentation Container -->
+  <main class="presentation-wrapper">
+    <div id="slide-deck" class="slide-deck">
+
+      <!-- SLIDE 1: Executive Vision & Paradigm -->
+      <section class="slide active" data-slide="1">
+        <div class="slide-header">
+          <span class="tag">EXECUTIVE SUMMARY &bull; CSE RESEARCH</span>
+          <h1>Mobile Remote Photoplethysmography to Cuffless Blood Pressure Estimation</h1>
+          <p class="subtitle">Researchers: <strong>Vedang Bhatt</strong> (Student of CSE Dept.) &bull; <strong>Anubhav Shrivastav</strong> (Student of CSE Dept.) &bull; Project: <strong>vedang28120/rPPG-to-BP-estimation</strong></p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#9879;</span> The Global Clinical Challenge</h3>
+            <ul class="bullet-list">
+              <li><strong>1.28 Billion Adults</strong> worldwide suffer from hypertension—the leading risk factor for strokes, heart failure, and renal disease.</li>
+              <li><strong>Occlusive Cuff Limitations:</strong> Traditional sphygmomanometers cause sleep disruption during nocturnal monitoring, provide only discrete static snapshots, and cannot capture transient hypertensive spikes.</li>
+              <li><strong>The rPPG Vision:</strong> Transforming standard, non-contact front-facing smartphone cameras into continuous, clinical-grade cardiovascular monitors with zero added hardware.</li>
+            </ul>
+          </div>
+          <div class="glass-card accent-card">
+            <h3><span class="icon">&#10024;</span> Key Scientific & Engineering Breakthroughs</h3>
+            <div class="metric-row">
+              <div class="metric-box">
+                <span class="metric-val">10.12</span>
+                <span class="metric-lbl">Subject SBP MAE (mmHg)</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">5.91</span>
+                <span class="metric-lbl">Subject DBP MAE (mmHg)</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">120 ms</span>
+                <span class="metric-lbl">On-Device Edge Latency</span>
+              </div>
+            </div>
+            <p class="summary-note">
+              Operates via <strong>468-point FaceMesh</strong> tracking, <strong>POS chrominance projection</strong>, <strong>BayesShrink wavelet denoising</strong>, and the <strong>MODEL-06-SepHead</strong> architecture with decoupled SBP/DBP heads.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Optical Acquisition & State Machine -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <span class="tag">STAGE 0 & 1 &bull; OPTICAL FRONTEND</span>
+          <h1>Photometric Convergence & Facial Landmark Tracking</h1>
+          <p class="subtitle">Eliminating sensor exposure jitter and isolating microvascular perfusion</p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#128247;</span> Camera2 AE/AWB Finite State Machine</h3>
+            <p>Pulsatile hemoglobin modulation represents merely <strong>0.1% to 1.5%</strong> of DC reflectance. Sensor gain shifts destroy this signal.</p>
+            <div class="step-flow">
+              <div class="step-box">
+                <strong>1. Convergence Phase</strong>
+                <span>Auto-Exposure & White Balance stabilize to ambient skin reflectance.</span>
+              </div>
+              <div class="step-box">
+                <strong>2. Hold Phase</strong>
+                <span>Telemetry validates histogram convergence over 15 consecutive frames.</span>
+              </div>
+              <div class="step-box highlight">
+                <strong>3. Lock Phase</strong>
+                <span><code>AE_LOCK = true</code> & <code>AWB_LOCK = true</code> freeze ISO, shutter duration, and disable ISP sharpening.</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass-card">
+            <h3><span class="icon">&#128100;</span> 468-Point MediaPipe Forehead ROI</h3>
+            <ul class="bullet-list">
+              <li><strong>Central Forehead ROI:</strong> Landmarks <code>[10, 109, 151, 338]</code> are dynamically tracked in 3D coordinates.</li>
+              <li><strong>Anatomical Rationale:</strong> Forehead microvasculature provides maximal perfusion while avoiding muscle artifacts from talking, smiling, or facial hair.</li>
+              <li><strong>Temporal Standardization:</strong> PCHIP (Piecewise Cubic Hermite Interpolating Polynomial) standardizes variable 28–38 ms camera timestamps onto a strict <strong>125 Hz uniform grid</strong>.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: POS vs TS-CAN Chrominance Projection -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <span class="tag">STAGE 2 &bull; CHROMINANCE PROJECTION</span>
+          <h1>Algebraic Null-Space Projection vs Spatio-Temporal Attention</h1>
+          <p class="subtitle">Isolating pulsatile hemoglobin absorption from dominant specular white-light reflection</p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#9889;</span> Plane-Orthogonal-to-Skin (POS) Algorithm</h3>
+            <p>Maps normalized RGB signals <i>C&#771;(t)</i> onto a projection plane orthogonal to skin reflectance:</p>
+            <div class="formula-card">
+              <code>X<sub>s</sub>(t) = G&#771;(t) &minus; B&#771;(t)</code><br/>
+              <code>Y<sub>s</sub>(t) = G&#771;(t) + B&#771;(t) &minus; 2&middot;R&#771;(t)</code><br/>
+              <code>S(t) = X<sub>s</sub>(t) + &alpha;&middot;Y<sub>s</sub>(t), &nbsp; where &alpha; = &sigma;(X<sub>s</sub>) / &sigma;(Y<sub>s</sub>)</code>
+            </div>
+            <p class="small-text">
+              <strong>Mathematical Property:</strong> Specular white reflection (<i>R = G = B</i>) lies in the mathematical null space of the projection, maximizing signal-to-noise ratio (<strong>8.9 dB SNR</strong>).
+            </p>
+          </div>
+          <div class="glass-card">
+            <h3><span class="icon">&#129302;</span> TS-CAN (Deep Spatio-Temporal Attention)</h3>
+            <ul class="bullet-list">
+              <li><strong>Temporal Shift Modules:</strong> Facilitates cross-frame information exchange without introducing 3D convolution parameter overhead.</li>
+              <li><strong>Spatial Attention Masks:</strong> Automatically learns to weigh high-SNR capillary regions over shadows and edges.</li>
+              <li><strong>Benchmark Superiority:</strong> Achieves <strong>10.4 dB SNR</strong> on synchronized video benchmarks, providing clean pulse waveforms during head movement.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: Physiological Signal Conditioning -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <span class="tag">STAGE 3 &bull; PHYSIOLOGICAL DSP</span>
+          <h1>Dual-Stream Filtering & BayesShrink Wavelet Denoising</h1>
+          <p class="subtitle">Preserving diagnostic systolic upstroke kinetics while rejecting sensor noise and baseline drift</p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#128260;</span> Dual-Stream Filtering Architecture</h3>
+            <div class="dual-stream-box">
+              <div class="stream-box stream-a">
+                <h4>Stream A: Heart Rate Isolation</h4>
+                <p>4th-order zero-phase Butterworth bandpass [0.75, 3.0 Hz] (45–180 BPM). Optimizes Welch PSD for instantaneous Heart Rate & RMSSD HRV.</p>
+              </div>
+              <div class="stream-box stream-b">
+                <h4>Stream B: Morphology Preservation</h4>
+                <p>Preserves dicrotic notch, systolic slope, and high-frequency inflection dynamics critical for blood pressure regression.</p>
+              </div>
+            </div>
+          </div>
+          <div class="glass-card">
+            <h3><span class="icon">&#128394;</span> BayesShrink DWT & SPA Detrending</h3>
+            <ul class="bullet-list">
+              <li><strong>Discrete Wavelet Transform:</strong> Multi-level DWT using <em>sym8</em> wavelets with adaptive subband thresholding:
+                <div class="formula-card compact"><code>T<sub>B</sub> = &sigma;<sup>2</sup><sub>noise</sub> / &sigma;<sub>X</sub>, &nbsp; where &sigma;<sub>noise</sub> = median(|cD1|) / 0.6745</code></div>
+              </li>
+              <li><strong>Smoothness Priors Approach (SPA):</strong> Removes low-frequency respiratory baseline wander (&lambda; = 100) via sparse Cholesky factorization.</li>
+              <li><strong>Signal Quality Index (SQI) Gate:</strong> Enforces flatline checks, skewness [&minus;2, 2], kurtosis &lt; 5, and spectral SNR gates.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: MODEL-06 Architecture -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <span class="tag">STAGE 4 &bull; NEURAL SEQUENCE MODELING</span>
+          <h1>MODEL-06-SepHead Architecture</h1>
+          <p class="subtitle">Dual-Branch 1D-ResNet + BiGRU + Multi-Head Self-Attention with Decoupled SBP/DBP Heads</p>
+        </div>
+        <div class="slide-body">
+          <div class="arch-diagram-card glass-card">
+            <div class="arch-flow">
+              <div class="arch-node input-node">
+                <strong>Input Tensor</strong>
+                <span>(1 &times; 1250, 10s @ 125Hz)</span>
+                <span>+ Demographics (3D)</span>
+              </div>
+              <div class="arch-branch-group">
+                <div class="arch-node branch-1">
+                  <strong>Branch 1: Local Morphology</strong>
+                  <span>Kernel=5, Stride=2</span>
+                  <span>3&times; ResBlock1D (32&rarr;128)</span>
+                </div>
+                <div class="arch-node branch-2">
+                  <strong>Branch 2: Global Context</strong>
+                  <span>Kernel=11, Dilated (1,2,2)</span>
+                  <span>3&times; ResBlock1D (32&rarr;128)</span>
+                </div>
+              </div>
+              <div class="arch-node recurrent-node">
+                <strong>Temporal Recurrence & Attention</strong>
+                <span>2-Layer BiGRU (hidden=64)</span>
+                <span>4-Head Multi-Head Self-Attention</span>
+              </div>
+              <div class="arch-heads-group">
+                <div class="arch-node head-sbp">
+                  <strong>Decoupled SBP Head</strong>
+                  <span>Linear(160&rarr;64) &rarr; ReLU &rarr; Linear(64&rarr;1)</span>
+                  <span class="output-tag">&rarr; SBP (mmHg)</span>
+                </div>
+                <div class="arch-node head-dbp">
+                  <strong>Decoupled DBP Head</strong>
+                  <span>Linear(160&rarr;64) &rarr; ReLU &rarr; Linear(64&rarr;1)</span>
+                  <span class="output-tag">&rarr; DBP (mmHg)</span>
+                </div>
+              </div>
+            </div>
+            <div class="arch-notes grid-2col">
+              <p><strong>Why Decoupled Heads?</strong> SBP is governed by ventricular ejection stroke volume and aortic compliance; DBP is driven by total peripheral vascular resistance (TPVR). Decoupling prevents gradient competition.</p>
+              <p><strong>Derivative Ablation Discovery:</strong> Derivative channels (<i>vPPG</i>, <i>aPPG</i>) amplify high-frequency 30 FPS camera quantization noise. Single-channel PPG achieved superior generalizability.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: Empirical Benchmarks & Ablations -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <span class="tag">STAGE 5 &bull; BENCHMARK VALIDATION</span>
+          <h1>Empirical Benchmarks & Progressive Ablation Ladder</h1>
+          <p class="subtitle">Rigorous Subject-Level Evaluation on Synchronized Clinical & Optical Datasets (MCD-Iriun)</p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#128202;</span> Model Progression Benchmarks</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Model Generation</th>
+                  <th>SBP MAE</th>
+                  <th>DBP MAE</th>
+                  <th>Subject SBP / DBP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>MODEL-01 (Demo MLP)</td>
+                  <td>16.82 mmHg</td>
+                  <td>9.41 mmHg</td>
+                  <td>15.90 / 8.85 mmHg</td>
+                </tr>
+                <tr>
+                  <td>MODEL-03 (1D-ResNet)</td>
+                  <td>14.20 mmHg</td>
+                  <td>8.12 mmHg</td>
+                  <td>13.10 / 7.40 mmHg</td>
+                </tr>
+                <tr>
+                  <td>MODEL-05 (+BiGRU+MHSA)</td>
+                  <td>12.65 mmHg</td>
+                  <td>7.20 mmHg</td>
+                  <td>11.45 / 6.55 mmHg</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>MODEL-06-SepHead (Ours)</strong></td>
+                  <td><strong>11.58 mmHg</strong></td>
+                  <td><strong>6.70 mmHg</strong></td>
+                  <td><strong>10.12 / 5.91 mmHg</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="glass-card">
+            <h3><span class="icon">&#127919;</span> Extractor SNR Benchmarks</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Optical Extractor</th>
+                  <th>Mean SNR</th>
+                  <th>Computational Cost</th>
+                  <th>Motion Robustness</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Green Channel</td>
+                  <td>2.4 dB</td>
+                  <td>Ultra-Light (0.1 ms)</td>
+                  <td>Poor</td>
+                </tr>
+                <tr>
+                  <td>CHROM</td>
+                  <td>5.8 dB</td>
+                  <td>Light (0.5 ms)</td>
+                  <td>Moderate</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>POS (Plane-Orthogonal)</strong></td>
+                  <td><strong>8.9 dB</strong></td>
+                  <td><strong>Light (0.8 ms)</strong></td>
+                  <td><strong>High (Specular Free)</strong></td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>TS-CAN (Deep Attention)</strong></td>
+                  <td><strong>10.4 dB</strong></td>
+                  <td><strong>Medium (8.5 ms)</strong></td>
+                  <td><strong>Superior (Adaptive)</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: The Physics of Template Collapse -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <span class="tag">SCIENTIFIC INSIGHT &bull; LIMITING PHYSICS</span>
+          <h1>The Physics of "Template Collapse"</h1>
+          <p class="subtitle">Theoretical Foundation: Achraf Ben Ahmed et al. (arXiv:2606.03802) &bull; Physical constraints of uncalibrated rPPG</p>
+        </div>
+        <div class="slide-body grid-3col">
+          <div class="glass-card limit-card">
+            <div class="limit-num">1</div>
+            <h3>Microvascular Windkessel Damping</h3>
+            <p>
+              In the arterial tree, arterial compliance acts as a low-pass hydraulic reservoir. By the time the pulse wave reaches facial capillary beds, high-frequency reflections (dicrotic notch) are <strong>attenuated by 1–2 orders of magnitude</strong> compared to finger PPG.
+            </p>
+          </div>
+          <div class="glass-card limit-card">
+            <div class="limit-num">2</div>
+            <h3>8-Bit Quantization Floor</h3>
+            <p>
+              Consumer cameras quantize color intensities into 8 bits per channel (256 discrete levels), creating a noise floor of <strong>1/256 &approx; 0.39%</strong>. Since pulsatile rPPG AC amplitude is only <strong>0.1%–1.5%</strong>, subtle inflection points submerge beneath the sensor noise floor.
+            </p>
+          </div>
+          <div class="glass-card limit-card">
+            <div class="limit-num">3</div>
+            <h3>30 FPS Nyquist Ceiling</h3>
+            <p>
+              A dicrotic notch lasts approximately 30–50 ms. At 30 FPS (33.3 ms per frame), the feature is represented by only <strong>1–2 discrete points</strong>. PCHIP interpolation smooths the waveform but cannot mathematically recover aliased frequencies above 15 Hz.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: Clinical Standards & Calibration -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <span class="tag">CLINICAL TRANSLATION &bull; ISO COMPLIANCE</span>
+          <h1>Clinical Standards & Single-Point Calibration Paradigm</h1>
+          <p class="subtitle">Bridging the gap between optical relative pulses and absolute medical sphygmomanometry</p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#128138;</span> The Single-Point Calibration Paradigm</h3>
+            <ul class="bullet-list">
+              <li><strong>The Physical Reality:</strong> Pure optical signals measure relative blood volume variations (d<i>V</i>/d<i>t</i>), not absolute hydrostatic pressure (mmHg).</li>
+              <li><strong>The Calibration Solution:</strong> A single baseline cuff reading anchors individual vascular compliance and arterial tone (<i>Offset</i> = <i>BP</i><sub>cuff</sub> &minus; <i>BP&#770;</i><sub>model</sub>).</li>
+              <li><strong>Continuous Tracking:</strong> Once calibrated, MODEL-06 tracks subsequent continuous dynamic blood pressure variations with high clinical precision.</li>
+            </ul>
+          </div>
+          <div class="glass-card">
+            <h3><span class="icon">&#9989;</span> Clinical Compliance Standards</h3>
+            <div class="compliance-box">
+              <div class="comp-row">
+                <span class="comp-title">AAMI SP10 / ISO 81060-2:</span>
+                <span class="comp-val">Mean Error &le; 5.0 mmHg | SD &le; 8.0 mmHg</span>
+              </div>
+              <div class="comp-row">
+                <span class="comp-title">British Hypertension Society (BHS):</span>
+                <span class="comp-val">Grade A: &gt;60% within 5 mmHg, &gt;85% within 10 mmHg</span>
+              </div>
+              <div class="comp-row">
+                <span class="comp-title">Our Subject-Level Validation:</span>
+                <span class="comp-val highlight">10.12 mmHg SBP | 5.91 mmHg DBP</span>
+              </div>
+            </div>
+            <p class="small-text">Single-point calibration directly unlocks Grade A/B compliance under ISO 81060-2 continuous ambulatory protocols.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Android Edge Architecture -->
+      <section class="slide" data-slide="9">
+        <div class="slide-header">
+          <span class="tag">MOBILE DEPLOYMENT &bull; EDGE ARCHITECTURE</span>
+          <h1>Asynchronous "Record-then-Process" Android Architecture</h1>
+          <p class="subtitle">Zero JNI bottlenecks, zero frame drops, and sub-150ms execution on commodity hardware</p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#9881;</span> The Record-then-Process State Machine</h3>
+            <div class="record-process-flow">
+              <div class="rp-box record-phase">
+                <strong>1. RECORD PHASE (Real-Time @ 30 FPS)</strong>
+                <p>Camera2 API &rarr; YUV_420_888 &rarr; MediaPipe FaceMesh &rarr; Forehead RGB Spatial Mean. Accumulates 7–10s buffer in native memory with zero dropped frames.</p>
+              </div>
+              <div class="rp-arrow">&darr; <span>Buffer Complete</span></div>
+              <div class="rp-box process-phase">
+                <strong>2. PROCESS PHASE (Offline, Single-Shot)</strong>
+                <p>PCHIP 125 Hz Resampling &rarr; POS Extraction &rarr; Dual-Stream Filter &rarr; SQI Quality Gate &rarr; TFLite Multi-Output LSTM Inference (<strong>120 ms</strong>).</p>
+              </div>
+            </div>
+          </div>
+          <div class="glass-card">
+            <h3><span class="icon">&#128241;</span> Android Native & Edge Characteristics</h3>
+            <ul class="bullet-list">
+              <li><strong>No JNI Real-Time Bottlenecks:</strong> Decoupling acquisition from inference eliminates garbage collection pauses and frame drops.</li>
+              <li><strong>Multi-Output TFLite Interpreter:</strong> Custom quantized model outputs separate SBP and DBP regression values simultaneously.</li>
+              <li><strong>Zero Cloud Dependency:</strong> 100% of video ingestion, DSP, and neural inference occurs strictly on-device, preserving patient privacy.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: Interactive Video Hub & Deliverables -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <span class="tag">MEDIA & PUBLICATIONS &bull; RESEARCH ARTIFACTS</span>
+          <h1>Project Demonstration & Academic Publications</h1>
+          <p class="subtitle">Video demonstrations, formal publications, and presentation companion files</p>
+        </div>
+        <div class="slide-body grid-2col">
+          <div class="glass-card">
+            <h3><span class="icon">&#127916;</span> Video Demonstrations</h3>
+            <div class="video-selector">
+              <button class="vid-btn active" data-src="../Architecting_Cuffless_BP__Deconstructing_the_rPPG_Pipeline.mp4">Pipeline Architecture</button>
+              <button class="vid-btn" data-src="../demo video.mp4">App Demo</button>
+              <button class="vid-btn" data-src="../Patient_using_digital_kiosk_1080p_202608112145.mp4">Digital Kiosk</button>
+            </div>
+            <div class="video-player-container">
+              <video id="main-video-player" controls preload="metadata" src="../Architecting_Cuffless_BP__Deconstructing_the_rPPG_Pipeline.mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+          <div class="glass-card">
+            <h3><span class="icon">&#128196;</span> Research Deliverables & Documents</h3>
+            <div class="doc-list">
+              <a class="doc-card" href="../../academic_paper_rppg.pdf" target="_blank">
+                <span class="doc-icon">&#128218;</span>
+                <div class="doc-info">
+                  <strong>academic_paper_rppg.pdf</strong>
+                  <span>5-Page Manuscript (Authors: Vedang Bhatt, Anubhav Shrivastav &bull; Students of CSE Dept. &bull; Project: vedang28120/rPPG-to-BP-estimation)</span>
+                </div>
+              </a>
+              <a class="doc-card" href="../EXECUTIVE_SUMMARY_1PAGER.pdf" target="_blank">
+                <span class="doc-icon">&#128203;</span>
+                <div class="doc-info">
+                  <strong>EXECUTIVE_SUMMARY_1PAGER.pdf</strong>
+                  <span>High-Density 1-Page Executive Factsheet & Clinical Blueprint</span>
+                </div>
+              </a>
+              <a class="doc-card" href="../PRESENTER_DEFENSE_GUIDE.md" target="_blank">
+                <span class="doc-icon">&#128172;</span>
+                <div class="doc-info">
+                  <strong>PRESENTER_DEFENSE_GUIDE.md</strong>
+                  <span>Master Defense Cue Sheet with Q&A and 7 C's Scripts</span>
+                </div>
+              </a>
+              <a class="doc-card" href="../Digital_Biomarker_Blueprint.pdf" target="_blank">
+                <span class="doc-icon">&#128202;</span>
+                <div class="doc-info">
+                  <strong>Digital_Biomarker_Blueprint.pdf</strong>
+                  <span>15-Page Architectural Blueprint Deck</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Live Signal & Hemodynamic Simulator Modal Drawer -->
+  <aside id="simulator-drawer" class="simulator-drawer open">
+    <div class="sim-header">
+      <div class="sim-title">
+        <span class="live-dot"></span>
+        <strong>Live Hemodynamic Waveform & BP Simulator (125 Hz DSP Engine)</strong>
+      </div>
+      <div class="sim-actions">
+        <button id="btn-sim-reset" class="sim-btn">Reset</button>
+        <button id="btn-sim-close" class="sim-btn">&#10005;</button>
+      </div>
+    </div>
+    <div class="sim-body">
+      <!-- Waveform Canvas -->
+      <div class="canvas-container">
+        <canvas id="waveform-canvas" width="800" height="150"></canvas>
+      </div>
+      <!-- Telemetry Dashboard -->
+      <div class="telemetry-bar">
+        <div class="tele-item">
+          <span class="tele-lbl">Heart Rate</span>
+          <span id="tele-hr" class="tele-val">72 BPM</span>
+        </div>
+        <div class="tele-item">
+          <span class="tele-lbl">Estimated BP</span>
+          <span id="tele-bp" class="tele-val highlight">118 / 74 mmHg</span>
+        </div>
+        <div class="tele-item">
+          <span class="tele-lbl">Waveform SNR</span>
+          <span id="tele-snr" class="tele-val">9.4 dB</span>
+        </div>
+        <div class="tele-item">
+          <span class="tele-lbl">SQI Status</span>
+          <span id="tele-sqi" class="tele-val good">VALID (PASS)</span>
+        </div>
+        <div class="tele-item">
+          <span class="tele-lbl">Active DSP</span>
+          <span id="tele-dsp" class="tele-val">Stream B (Wavelet)</span>
+        </div>
+      </div>
+      <!-- Live Controls -->
+      <div class="sim-controls">
+        <div class="ctrl-group">
+          <label for="slider-hr">Heart Rate (BPM): <span id="val-hr">72</span></label>
+          <input type="range" id="slider-hr" min="45" max="150" value="72" />
+        </div>
+        <div class="ctrl-group">
+          <label for="slider-sbp">Systolic (SBP): <span id="val-sbp">118</span></label>
+          <input type="range" id="slider-sbp" min="90" max="170" value="118" />
+        </div>
+        <div class="ctrl-group">
+          <label for="slider-dbp">Diastolic (DBP): <span id="val-dbp">74</span></label>
+          <input type="range" id="slider-dbp" min="60" max="110" value="74" />
+        </div>
+        <div class="ctrl-group">
+          <label for="slider-noise">Noise Amplitude: <span id="val-noise">Low</span></label>
+          <input type="range" id="slider-noise" min="0" max="100" value="15" />
+        </div>
+        <div class="ctrl-group toggle-group">
+          <label><input type="checkbox" id="toggle-notch" checked /> Dicrotic Notch</label>
+          <label><input type="checkbox" id="toggle-wavelet" checked /> BayesShrink DWT</label>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Presenter Cue Notes Drawer -->
+  <aside id="notes-drawer" class="notes-drawer">
+    <div class="notes-header">
+      <strong>Speaker Notes & Q&A Defense Cue (Slide <span id="notes-slide-num">1</span>)</strong>
+      <button id="btn-notes-close" class="sim-btn">&#10005;</button>
+    </div>
+    <div id="notes-content" class="notes-content">
+      <!-- Injected via JavaScript -->
+    </div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>

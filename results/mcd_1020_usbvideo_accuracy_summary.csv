@@ -1,0 +1,5 @@
+Method,SBP MAE (mmHg),DBP MAE (mmHg),BP Overall MAE,HR MAE (BPM),Mean SNR (dB),Mean Latency (s)
+TS-CAN,18.1,1.7,9.9,58.16,-6.21,3.14
+POS,18.1,1.7,9.9,13.2,-5.74,11.64
+CHROM,18.1,1.7,9.9,33.7,-8.91,11.52
+GREEN,18.05,1.7,9.88,42.95,-10.44,11.2

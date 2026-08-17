@@ -34,7 +34,7 @@ out/
 *.class
 *.ap_
 
-# Large Mobile Binaries & Backup Artifacts (>100MB GitHub limit)
+# Large Mobile Binaries & Media Artifacts (>100MB GitHub limit)
 *.apk
 *.aab
 scrcpy/
@@ -43,6 +43,7 @@ scrcpy.zip
 *.dll
 *.so
 *.dylib
+presentation/Architecting_Cuffless_BP__Deconstructing_the_rPPG_Pipeline.mp4
 
 # Device Logs, System Traces & Crash Dumps (Contains hardware serials & raw system memory)
 logcat*.txt

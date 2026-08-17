@@ -1,0 +1,160 @@
+{
+  "before": {
+    "meta": {
+      "name": "1020_USBVideo_before.avi",
+      "gt_sbp": 105.0,
+      "gt_dbp": 78.0,
+      "gt_hr": 83.0,
+      "gt_spo2": 99.0,
+      "gt_resp": 18.0,
+      "age": 23.0,
+      "gender": 0,
+      "bmi": 19.031142,
+      "weight": 55.0,
+      "height": 170.0,
+      "camera": "USBVideo (Left View)",
+      "state": "Resting / Baseline"
+    },
+    "methods": {
+      "TS-CAN": {
+        "hr": 149.7,
+        "hr_err": 66.66,
+        "sbp": 127.1,
+        "sbp_err": 22.1,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.2,
+        "map_err": 6.2,
+        "pp": 50.8,
+        "pp_err": 23.8,
+        "snr_db": -7.57,
+        "latency_s": 3.81,
+        "fps": 30.0
+      },
+      "POS": {
+        "hr": 79.7,
+        "hr_err": 3.3,
+        "sbp": 127.1,
+        "sbp_err": 22.1,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.2,
+        "map_err": 6.2,
+        "pp": 50.8,
+        "pp_err": 23.8,
+        "snr_db": -6.13,
+        "latency_s": 11.86,
+        "fps": 125.0
+      },
+      "CHROM": {
+        "hr": 50.4,
+        "hr_err": 32.6,
+        "sbp": 127.1,
+        "sbp_err": 22.1,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.2,
+        "map_err": 6.2,
+        "pp": 50.8,
+        "pp_err": 23.8,
+        "snr_db": -10.67,
+        "latency_s": 11.57,
+        "fps": 125.0
+      },
+      "GREEN": {
+        "hr": 43.6,
+        "hr_err": 39.4,
+        "sbp": 127.1,
+        "sbp_err": 22.1,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.3,
+        "map_err": 6.3,
+        "pp": 50.8,
+        "pp_err": 23.8,
+        "snr_db": -12.76,
+        "latency_s": 11.12,
+        "fps": 125.0
+      }
+    }
+  },
+  "after": {
+    "meta": {
+      "name": "1020_USBVideo_after.avi",
+      "gt_sbp": 113.0,
+      "gt_dbp": 78.0,
+      "gt_hr": 100.0,
+      "gt_spo2": 98.0,
+      "gt_resp": 19.0,
+      "age": 23.0,
+      "gender": 0,
+      "bmi": 19.031142,
+      "weight": 55.0,
+      "height": 170.0,
+      "camera": "USBVideo (Left View)",
+      "state": "Post-Exercise / Elevated HR & SBP"
+    },
+    "methods": {
+      "TS-CAN": {
+        "hr": 149.7,
+        "hr_err": 49.66,
+        "sbp": 127.1,
+        "sbp_err": 14.1,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.3,
+        "map_err": 3.63,
+        "pp": 50.8,
+        "pp_err": 15.8,
+        "snr_db": -4.85,
+        "latency_s": 2.48,
+        "fps": 30.0
+      },
+      "POS": {
+        "hr": 76.9,
+        "hr_err": 23.1,
+        "sbp": 127.1,
+        "sbp_err": 14.1,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.3,
+        "map_err": 3.63,
+        "pp": 50.8,
+        "pp_err": 15.8,
+        "snr_db": -5.35,
+        "latency_s": 11.43,
+        "fps": 125.0
+      },
+      "CHROM": {
+        "hr": 65.2,
+        "hr_err": 34.8,
+        "sbp": 127.1,
+        "sbp_err": 14.1,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.2,
+        "map_err": 3.53,
+        "pp": 50.8,
+        "pp_err": 15.8,
+        "snr_db": -7.16,
+        "latency_s": 11.46,
+        "fps": 125.0
+      },
+      "GREEN": {
+        "hr": 53.5,
+        "hr_err": 46.5,
+        "sbp": 127.0,
+        "sbp_err": 14.0,
+        "dbp": 76.3,
+        "dbp_err": 1.7,
+        "map": 93.2,
+        "map_err": 3.53,
+        "pp": 50.8,
+        "pp_err": 15.8,
+        "snr_db": -8.12,
+        "latency_s": 11.28,
+        "fps": 125.0
+      }
+    }
+  }
+}
