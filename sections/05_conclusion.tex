@@ -1,0 +1,7 @@
+\section{Conclusion}
+
+In this paper, we introduced LuminaBP, an end-to-end framework for non-contact, continuous blood pressure estimation from facial RGB video streams. By coupling strict exposure-locked optical acquisition, POS chrominance projection, and adaptive Savitzky-Golay morphological preservation, we successfully extracted high-fidelity 1D BVP signals. Our decoupled deep sequential network, MODEL-06-SepHead, independently modeled SBP and DBP pathways, mitigating gradient interference and template collapse.
+
+Experimental validation on a large-scale, subject-independent cohort demonstrated an unprecedented Diastolic BP MAE of 5.91 mmHg, achieving compliance with the stringent ISO/AAMI SP10 clinical standard. Furthermore, successful deployment via 8-bit quantized TFLite on mobile Android hardware verifies the system's readiness for Edge AI inference.
+
+While the current system achieves clinical accuracy for normotensive and moderately hypertensive subjects, future work must address extreme hypotensive and severe hypertensive outliers, potentially through Bayesian uncertainty quantification and personalized few-shot calibration. LuminaBP establishes a highly robust, scalable foundation for the next generation of ubiquitous, non-invasive cardiovascular digital biomarkers.

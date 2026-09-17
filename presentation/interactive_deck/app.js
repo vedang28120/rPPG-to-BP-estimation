@@ -1,6 +1,9 @@
 /**
+ * Interactive Presentation Engine & Telemetry Simulator
  * Mobile rPPG to Cuffless Blood Pressure Estimation
- * Interactive Defense Deck & 125 Hz DSP Waveform Engine
+ * Presenters: Vedang Bhatt, Anubhav Shrivastav, Aadarsh (Students of CSE Dept.)
+ * Institution: Bhilai Institute of Technology, Raipur
+ * Project: vedang28120/rPPG-to-BP-estimation
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,54 +21,72 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnFullscreen = document.getElementById('btn-fullscreen');
   const btnToggleNotes = document.getElementById('btn-toggle-notes');
   const notesDrawer = document.getElementById('notes-drawer');
-  const btnNotesClose = document.getElementById('btn-notes-close');
+  const btnCloseNotes = document.getElementById('btn-close-notes');
   const notesContent = document.getElementById('notes-content');
-  const notesSlideNum = document.getElementById('notes-slide-num');
 
-  // Speaker notes dictionary adhering to 7 C's
+  // Speaker notes adhering to 7 C's of Effective Communication
   const speakerNotes = {
-    1: `<h4>Slide 1: Executive Vision</h4>
-        <p><strong>Presenter Introduction:</strong> "We are Vedang Bhatt and Anubhav Shrivastav, students of CSE Dept. Project: vedang28120/rPPG-to-BP-estimation. Today we present our research on mobile rPPG to cuffless blood pressure estimation."</p>
-        <p><strong>Opening Script (30s):</strong> "Hypertension affects 1.28 billion people globally. Conventional cuffs are disruptive and intermittent. Our framework captures transcutaneous micro-color absorption from standard 30 FPS smartphone video to continuously estimate Systolic and Diastolic Blood Pressure with 10.12 / 5.91 mmHg accuracy."</p>
-        <p><strong>Key Focus:</strong> Touchless, zero extra hardware, edge-ready.</p>`,
-    2: `<h4>Slide 2: Optical Acquisition & State Machine</h4>
-        <p><strong>Key Concept:</strong> Camera2 AE/AWB Convergence-Hold-Lock protocol.</p>
-        <p><strong>Physics Defense:</strong> AC pulsatile amplitude is only 0.1–1.5% of total reflectance. Sensor gain shifts destroy this signal. Freezing ISO and exposure after convergence is mandatory.</p>
-        <p><strong>ROI:</strong> MediaPipe 468 landmarks isolate the central forehead (minimal motion artifacts).</p>`,
-    3: `<h4>Slide 3: Chrominance Projection (POS vs TS-CAN)</h4>
-        <p><strong>Math Formula:</strong> <code>X<sub>s</sub> = G &minus; B</code>, <code>Y<sub>s</sub> = G + B &minus; 2R</code>, <code>S = X<sub>s</sub> + &alpha;&middot;Y<sub>s</sub></code>.</p>
-        <p><strong>Crucial Insight:</strong> Specular reflection is equal across RGB, so it falls directly in the mathematical null space of the projection matrix, achieving 8.9 dB SNR.</p>
-        <p><strong>Deep Alternative:</strong> TS-CAN provides 10.4 dB SNR by shifting temporal channels without 3D-CNN parameter bloat.</p>`,
-    4: `<h4>Slide 4: Physiological DSP & Wavelet Denoising</h4>
-        <p><strong>Dual-Stream Logic:</strong></p>
+    1: `<h4>Slide 1: Title Slide & Introduction</h4>
+        <p><strong>Presenters:</strong> Vedang Bhatt, Anubhav Shrivastav, Aadarsh (B. Tech. CSE, 7th Sem, BIT Raipur).</p>
+        <p><strong>Opening Script (45s):</strong> "Good morning respected committee members and faculty. Today we present our Vocational Training & Proposed Capstone Project titled 'Mobile Remote Photoplethysmography to Cuffless Blood Pressure Estimation'. This work demonstrates how standard smartphone RGB cameras can track transcutaneous micro-color changes to infer continuous blood pressure without external wearable sensors."</p>`,
+    2: `<h4>Slide 2: Introduction about the Training Undergone</h4>
+        <p><strong>Key Concept:</strong> Applied AI, Real-time Computer Vision & Biomedical Signal Processing.</p>
+        <p><strong>Industrial Motivation:</strong> 1.28 billion adults have hypertension. Traditional cuffs are bulky and sleep-disruptive. Our focus is non-contact optical physiological sensing.</p>
+        <p><strong>Tech Scope:</strong> Android Camera2 ingestion, MediaPipe landmarking, optical rPPG (POS/TS-CAN), and quantized TFLite on mobile.</p>`,
+    3: `<h4>Slide 3: Training Objectives</h4>
+        <p><strong>5 Core Technical Milestones:</strong></p>
         <ul>
-          <li><strong>Stream A:</strong> 4th-order Butterworth (0.75–3.0 Hz) &rarr; HR and RMSSD.</li>
-          <li><strong>Stream B:</strong> Wavelet BayesShrink DWT (<em>sym8</em>) &rarr; preserves systolic slope and inflection dynamics for BP estimation.</li>
-        </ul>
-        <p><strong>PCHIP Resampling:</strong> Standardizes 28–38 ms variable frame rates onto a strict 125 Hz grid while preserving monotonicity.</p>`,
-    5: `<h4>Slide 5: MODEL-06-SepHead Architecture</h4>
-        <p><strong>Architectural Rationale:</strong> Dual-Branch 1D-ResNet (kernel=5 for sharp local features, kernel=11 for multi-beat modulation) + BiGRU + 4-Head Self-Attention.</p>
-        <p><strong>Decoupled Heads:</strong> SBP reflects cardiac ejection volume; DBP reflects peripheral vascular resistance. Separate heads prevent gradient interference.</p>
-        <p><strong>Derivative Discovery:</strong> Single-channel PPG proved superior to vPPG/aPPG derivatives because differentiation amplifies 30 FPS camera quantization noise.</p>`,
-    6: `<h4>Slide 6: Empirical Benchmarks</h4>
-        <p><strong>Core Numbers:</strong> Subject SBP MAE 10.12 mmHg, DBP MAE 5.91 mmHg (MCD-Iriun synchronized clinical dataset).</p>
-        <p><strong>Progression Delta:</strong> SBP error reduced from 16.82 mmHg (Demo MLP) down to 10.12 mmHg.</p>
-        <p><strong>Subject Split:</strong> Strict <code>GroupShuffleSplit</code> enforced zero subject identity overlap between training and testing sets.</p>`,
-    7: `<h4>Slide 7: The Physics of Template Collapse</h4>
-        <p><strong>Theoretical Credit:</strong> First formalized by Achraf Ben Ahmed et al. (<em>arXiv:2606.03802</em>, 2026).</p>
-        <p><strong>The 3 Root Causes:</strong></p>
+          <li>1. Master optical rPPG physics & Beer-Lambert light attenuation.</li>
+          <li>2. Implement 468-point 3D MediaPipe Face Mesh tracking for forehead ROI.</li>
+          <li>3. Engineer physiological DSP (PCHIP 125 Hz, Butterworth, BayesShrink DWT).</li>
+          <li>4. Architect deep sequence models (MODEL-06-SepHead) for continuous SBP/DBP.</li>
+          <li>5. Optimize on-device Android latency to sub-150ms.</li>
+        </ul>`,
+    4: `<h4>Slide 4: Training Modules / Topics Covered</h4>
+        <p><strong>5-Module Breakdown:</strong></p>
+        <ul>
+          <li><strong>Module 1:</strong> Beer-Lambert law, POS null space, CHROM, and TS-CAN attention.</li>
+          <li><strong>Module 2:</strong> Camera2 API, 468-pt Face Mesh, Forehead ROI, EAR blink liveness.</li>
+          <li><strong>Module 3:</strong> PCHIP 125 Hz resampling, Butterworth bandpass, BayesShrink DWT, SPA detrending.</li>
+          <li><strong>Module 4:</strong> 1D multi-scale ResNet, BiGRU, 4-head Multi-Head Attention, Decoupled heads.</li>
+          <li><strong>Module 5:</strong> Record-then-Process state machine, AE/AWB lock, TFLite quantization.</li>
+        </ul>`,
+    5: `<h4>Slide 5: Key Learnings</h4>
+        <p><strong>Core Empirical Breakthroughs:</strong></p>
         <ol>
-          <li><strong>Windkessel Damping:</strong> Arterial compliance dampens the facial dicrotic notch by 1–2 orders of magnitude compared to finger PPG.</li>
-          <li><strong>8-Bit Quantization:</strong> 256 levels creates a 0.39% noise floor vs 0.1–1.5% pulsatile AC signal.</li>
-          <li><strong>30 FPS Ceiling:</strong> 15 Hz Nyquist frequency limits high-frequency inflection recovery.</li>
+          <li><strong>Template Collapse Physics:</strong> Windkessel low-pass filtering attenuates dicrotic notch by 1-2 orders; 8-bit noise floor (0.39%) and 30 FPS limit inflection recovery. Requires single-point calibration.</li>
+          <li><strong>Derivative Noise Pitfall:</strong> Derivatives (vPPG, aPPG) amplify sensor noise by O(f²). Single-channel raw PPG generalizes superiorly.</li>
+          <li><strong>POS Null-Space:</strong> Orthogonal projection places specular white light (R=G=B) into the null space, yielding 8.9 dB SNR.</li>
+          <li><strong>Record-then-Process:</strong> Offline batching eliminates JNI GC pauses and dropped frames.</li>
         </ol>`,
-    8: `<h4>Slide 8: Clinical Standards & Calibration</h4>
-        <p><strong>ISO 81060-2 Target:</strong> Mean Error &le; 5.0 mmHg, SD &le; 8.0 mmHg.</p>
-        <p><strong>Single-Point Calibration:</strong> A single baseline cuff reading anchors individual arterial compliance, unlocking continuous Grade A/B tracking.</p>`,
-    9: `<h4>Slide 9: Android Edge Architecture</h4>
-        <p><strong>Record-then-Process:</strong> Buffering 7–10s at 30 FPS in native memory and executing single-shot TFLite inference in 120 ms eliminates mobile JNI frame drops and GC stalls.</p>`,
-    10: `<h4>Slide 10: Media Demonstrations & Deliverables</h4>
-        <p><strong>Artifacts Available:</strong> 5-Page Academic Paper by Vedang Bhatt & Anubhav Shrivastav (<code>academic_paper_rppg.pdf</code>, Students of CSE Dept. &bull; Project: vedang28120/rPPG-to-BP-estimation), 1-Page Executive Factsheet, and Master Defense Guide.</p>`
+    6: `<h4>Slide 6: Proposed Project Title & its Introduction</h4>
+        <p><strong>Capstone Scope:</strong> Non-invasive, contactless cuffless BP estimation from smartphone video.</p>
+        <p><strong>Clinical Need:</strong> Frictionless daily screening for hypertension prevention without white-coat stress artifacts.</p>`,
+    7: `<h4>Slide 7: Objectives of the Proposed Project</h4>
+        <p><strong>Deliverable Targets:</strong></p>
+        <ul>
+          <li>Capture optical pulse from 30 FPS video without hardware contact.</li>
+          <li>Resample to 125 Hz uniform grid and remove baseline wander via DWT.</li>
+          <li>Achieve subject-level SBP/DBP MAE &lt; 11.0 / &lt; 6.5 mmHg.</li>
+          <li>Meet ISO 81060-2 clinical compliance via single-point personal calibration.</li>
+          <li>Deploy 100% on-device Android execution in ~120 ms.</li>
+        </ul>`,
+    8: `<h4>Slide 9: Methodology / Approach of Proposed Project</h4>
+        <p><strong>5-Stage Flow:</strong> Camera2 AE/AWB Lock &rarr; Forehead 468 ROI &rarr; POS Null-Space Projection &rarr; Dual-Stream DSP &rarr; MODEL-06-SepHead Neural Regression.</p>`,
+    9: `<h4>Slide 10: Proposed Project Work Details</h4>
+        <p><strong>Architecture Details:</strong> Dual-Branch 1D-ResNet (Kernel=5 for morphology, Kernel=11 for rhythm) + 2-layer BiGRU (hidden=64) + 4-head Multi-Head Self-Attention + Decoupled SBP/DBP heads with custom loss:</p>
+        <p><code>L = &lambda;<sub>sbp</sub> &middot; MSE<sub>sbp</sub> + &lambda;<sub>dbp</sub> &middot; MSE<sub>dbp</sub></code></p>`,
+    10: `<h4>Slide 11: Expected Outcomes & Results of Proposed Project</h4>
+        <p><strong>Validated Benchmarks:</strong></p>
+        <ul>
+          <li>Subject SBP/DBP MAE: <strong>10.12 / 5.91 mmHg</strong> (MCD-Iriun dataset).</li>
+          <li>Progression Delta: 6.70 mmHg improvement over demographic baseline.</li>
+          <li>Extractor SNR: POS = 8.9 dB | TS-CAN = 10.4 dB.</li>
+          <li>Edge Latency: 120 ms on mobile CPU with zero dropped frames.</li>
+        </ul>`,
+    11: `<h4>Slide 12: Conclusion remarks & Future Scope of work</h4>
+        <p><strong>Conclusions:</strong> Feasibility confirmed on standard smartphones; single-point calibration solves Template Collapse.</p>
+        <p><strong>Future Scope:</strong> Fitzpatrick I-VI diverse trials, multi-site optical PTT, hardware NPU acceleration, and smart health kiosks.</p>`
   };
 
   function updateSlide(index) {
@@ -74,16 +95,22 @@ document.addEventListener('DOMContentLoaded', () => {
     currentSlideIndex = index;
 
     slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === currentSlideIndex);
+      slide.classList.remove('active', 'prev');
+      if (i === currentSlideIndex) {
+        slide.classList.add('active');
+      } else if (i < currentSlideIndex) {
+        slide.classList.add('prev');
+      }
     });
 
     slideIndicator.textContent = `Slide ${currentSlideIndex + 1} / ${totalSlides}`;
     const progressPercent = ((currentSlideIndex + 1) / totalSlides) * 100;
     progressBar.style.width = `${progressPercent}%`;
 
-    // Update notes content
-    notesSlideNum.textContent = currentSlideIndex + 1;
-    notesContent.innerHTML = speakerNotes[currentSlideIndex + 1] || '<p>No specific notes for this slide.</p>';
+    // Update Speaker Notes content
+    if (notesContent) {
+      notesContent.innerHTML = speakerNotes[currentSlideIndex + 1] || '<p>No specific notes for this slide.</p>';
+    }
   }
 
   btnPrev.addEventListener('click', () => updateSlide(currentSlideIndex - 1));
@@ -91,17 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ') {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
       updateSlide(currentSlideIndex + 1);
-    } else if (e.key === 'ArrowLeft') {
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
       updateSlide(currentSlideIndex - 1);
     } else if (e.key === 'f' || e.key === 'F') {
       toggleFullScreen();
     } else if (e.key === 'p' || e.key === 'P') {
-      notesDrawer.classList.toggle('open');
+      toggleNotes();
     }
   });
 
+  // Fullscreen toggle
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
@@ -111,231 +141,96 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-
   btnFullscreen.addEventListener('click', toggleFullScreen);
 
-  btnToggleNotes.addEventListener('click', () => {
-    notesDrawer.classList.toggle('open');
-  });
+  // Speaker notes toggle
+  function toggleNotes() {
+    notesDrawer.classList.toggle('hidden');
+    btnToggleNotes.classList.toggle('active');
+  }
+  btnToggleNotes.addEventListener('click', toggleNotes);
+  btnCloseNotes.addEventListener('click', toggleNotes);
 
-  btnNotesClose.addEventListener('click', () => {
-    notesDrawer.classList.remove('open');
-  });
-
-  // Initial slide load
-  updateSlide(0);
-
-  // ==========================================================================
-  // 2. Video Hub Switcher
-  // ==========================================================================
-  const vidBtns = document.querySelectorAll('.vid-btn');
-  const videoPlayer = document.getElementById('main-video-player');
-
-  vidBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      vidBtns.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      const src = btn.getAttribute('data-src');
-      if (videoPlayer && src) {
-        videoPlayer.src = src;
-        videoPlayer.play().catch(() => {});
-      }
-    });
-  });
-
-  // ==========================================================================
-  // 3. Live 125 Hz Hemodynamic Waveform Simulator Engine
-  // ==========================================================================
+  // Toggle Live Signal Simulator
   const btnToggleSim = document.getElementById('btn-toggle-sim');
-  const simDrawer = document.getElementById('simulator-drawer');
-  const btnSimClose = document.getElementById('btn-sim-close');
-  const btnSimReset = document.getElementById('btn-sim-reset');
-
-  btnToggleSim.addEventListener('click', () => {
-    simDrawer.classList.toggle('open');
-    btnToggleSim.classList.toggle('active', simDrawer.classList.contains('open'));
-  });
-
-  btnSimClose.addEventListener('click', () => {
-    simDrawer.classList.remove('open');
-    btnToggleSim.classList.remove('active', false);
-  });
-
-  const canvas = document.getElementById('waveform-canvas');
-  const ctx = canvas.getContext('2d');
-
-  const sliderHR = document.getElementById('slider-hr');
-  const sliderSBP = document.getElementById('slider-sbp');
-  const sliderDBP = document.getElementById('slider-dbp');
-  const sliderNoise = document.getElementById('slider-noise');
-  const toggleNotch = document.getElementById('toggle-notch');
-  const toggleWavelet = document.getElementById('toggle-wavelet');
-
-  const valHR = document.getElementById('val-hr');
-  const valSBP = document.getElementById('val-sbp');
-  const valDBP = document.getElementById('val-dbp');
-  const valNoise = document.getElementById('val-noise');
-
-  const teleHR = document.getElementById('tele-hr');
-  const teleBP = document.getElementById('tele-bp');
-  const teleSNR = document.getElementById('tele-snr');
-  const teleSQI = document.getElementById('tele-sqi');
-  const teleDSP = document.getElementById('tele-dsp');
-
-  // Slider events
-  sliderHR.addEventListener('input', (e) => {
-    valHR.textContent = e.target.value;
-    teleHR.textContent = `${e.target.value} BPM`;
-  });
-  sliderSBP.addEventListener('input', (e) => {
-    valSBP.textContent = e.target.value;
-    teleBP.textContent = `${e.target.value} / ${sliderDBP.value} mmHg`;
-  });
-  sliderDBP.addEventListener('input', (e) => {
-    valDBP.textContent = e.target.value;
-    teleBP.textContent = `${sliderSBP.value} / ${e.target.value} mmHg`;
-  });
-  sliderNoise.addEventListener('input', (e) => {
-    const val = parseInt(e.target.value);
-    valNoise.textContent = val < 20 ? 'Low' : val < 60 ? 'Medium' : 'High';
-    const snr = Math.max(2.0, (14.0 - val * 0.12)).toFixed(1);
-    teleSNR.textContent = `${snr} dB`;
-    if (val > 70) {
-      teleSQI.textContent = 'POOR (WARN)';
-      teleSQI.className = 'tele-val';
-      teleSQI.style.color = '#F43F5E';
-    } else {
-      teleSQI.textContent = 'VALID (PASS)';
-      teleSQI.className = 'tele-val good';
-      teleSQI.style.color = '#10B981';
-    }
-  });
-
-  toggleWavelet.addEventListener('change', (e) => {
-    teleDSP.textContent = e.target.checked ? 'Stream B (Wavelet)' : 'Stream A (Butterworth)';
-  });
-
-  btnSimReset.addEventListener('click', () => {
-    sliderHR.value = 72;
-    sliderSBP.value = 118;
-    sliderDBP.value = 74;
-    sliderNoise.value = 15;
-    toggleNotch.checked = true;
-    toggleWavelet.checked = true;
-    valHR.textContent = '72';
-    valSBP.textContent = '118';
-    valDBP.textContent = '74';
-    valNoise.textContent = 'Low';
-    teleHR.textContent = '72 BPM';
-    teleBP.textContent = '118 / 74 mmHg';
-    teleSNR.textContent = '9.4 dB';
-    teleSQI.textContent = 'VALID (PASS)';
-    teleSQI.style.color = '#10B981';
-    teleDSP.textContent = 'Stream B (Wavelet)';
-  });
-
-  // Animated Waveform Engine
-  let timeStep = 0;
-  const bufferSize = 800;
-  const pulseBuffer = new Array(bufferSize).fill(0);
-
-  function drawWaveform() {
-    // Dynamic canvas resize
-    if (canvas.width !== canvas.parentElement.clientWidth) {
-      canvas.width = canvas.parentElement.clientWidth;
-    }
-
-    const hr = parseFloat(sliderHR.value);
-    const noiseAmp = parseFloat(sliderNoise.value) / 100.0;
-    const hasNotch = toggleNotch.checked;
-    const useWavelet = toggleWavelet.checked;
-
-    const cardiacFreq = hr / 60.0; // Hz
-    const fs = 125.0; // 125 Hz standard rate
-    const t = timeStep / fs;
-
-    // Cardiac Pulse Model: Systolic Upstroke + Diastolic Wave + Notch
-    const phase = (t * cardiacFreq) % 1.0;
-    let pulseVal = 0;
-
-    // Systolic ejection peak (sharp Gaussian)
-    pulseVal += Math.exp(-Math.pow((phase - 0.20) / 0.08, 2)) * 1.0;
-
-    // Dicrotic notch & diastolic runoff reflection
-    if (hasNotch) {
-      pulseVal += Math.exp(-Math.pow((phase - 0.45) / 0.10, 2)) * 0.40;
-    } else {
-      // Windkessel damped
-      pulseVal += Math.exp(-Math.pow((phase - 0.48) / 0.22, 2)) * 0.15;
-    }
-
-    // High frequency sensor noise & respiratory wander
-    let noise = (Math.random() - 0.5) * noiseAmp * 0.6;
-    if (useWavelet) {
-      // Wavelet soft thresholding suppresses Gaussian noise
-      noise = noise * 0.3;
-    }
-    const respiration = Math.sin(2 * Math.PI * 0.25 * t) * 0.08;
-
-    const finalSignal = pulseVal + noise + respiration;
-
-    // Push into rolling buffer
-    pulseBuffer.push(finalSignal);
-    pulseBuffer.shift();
-
-    // Render Canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw Gridlines
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < canvas.width; x += 40) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, canvas.height);
-      ctx.stroke();
-    }
-    for (let y = 0; y < canvas.height; y += 25) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(canvas.width, y);
-      ctx.stroke();
-    }
-
-    // Draw Pulse Trace
-    ctx.beginPath();
-    ctx.strokeStyle = useWavelet ? '#38BDF8' : '#10B981';
-    ctx.lineWidth = 2.2;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = useWavelet ? 'rgba(56, 189, 248, 0.5)' : 'rgba(16, 185, 129, 0.5)';
-
-    const midY = canvas.height * 0.55;
-    const scaleY = canvas.height * 0.45;
-    const stepX = canvas.width / (bufferSize - 1);
-
-    for (let i = 0; i < bufferSize; i++) {
-      const x = i * stepX;
-      const y = midY - (pulseBuffer[i] - 0.4) * scaleY;
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    }
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-
-    // Draw Lead-Edge Pulse Dot
-    const currentX = canvas.width - 2;
-    const currentY = midY - (pulseBuffer[bufferSize - 1] - 0.4) * scaleY;
-    ctx.beginPath();
-    ctx.arc(currentX, currentY, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#F43F5E';
-    ctx.fill();
-
-    timeStep++;
-    requestAnimationFrame(drawWaveform);
+  const waveformPanel = document.getElementById('waveform-panel');
+  if (btnToggleSim && waveformPanel) {
+    btnToggleSim.addEventListener('click', () => {
+      waveformPanel.classList.toggle('hidden');
+      btnToggleSim.classList.toggle('active');
+    });
   }
 
-  requestAnimationFrame(drawWaveform);
+  // ==========================================================================
+  // 2. Synthetic 125 Hz Hemodynamic Waveform Canvas Renderer
+  // ==========================================================================
+  const canvas = document.getElementById('waveform-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let time = 0;
+    const history = [];
+    const maxPoints = 600;
+
+    function generatePPGSample(t) {
+      // Synthesize realistic Blood Volume Pulse (BVP) with dicrotic notch
+      const hrFreq = 1.2; // ~72 BPM
+      const phase = (t * hrFreq * 2 * Math.PI) % (2 * Math.PI);
+
+      // Systolic peak + dicrotic wave
+      const systolic = Math.exp(-Math.pow(phase - 1.0, 2) / 0.25) * 1.0;
+      const dicrotic = Math.exp(-Math.pow(phase - 2.4, 2) / 0.35) * 0.35;
+      const noise = (Math.random() - 0.5) * 0.02;
+
+      return systolic + dicrotic + noise;
+    }
+
+    function renderWaveform() {
+      time += 0.016; // 60 FPS update
+      const sample = generatePPGSample(time);
+      history.push(sample);
+      if (history.length > maxPoints) {
+        history.shift();
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw grid lines
+      ctx.strokeStyle = 'rgba(2, 132, 199, 0.08)';
+      ctx.lineWidth = 1;
+      for (let y = 15; y < canvas.height; y += 20) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // Draw waveform
+      ctx.strokeStyle = '#0284C7';
+      ctx.lineWidth = 2.2;
+      ctx.shadowColor = 'rgba(2, 132, 199, 0.5)';
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+
+      const step = canvas.width / maxPoints;
+      for (let i = 0; i < history.length; i++) {
+        const x = i * step;
+        const normalized = history[i];
+        const y = canvas.height - (normalized * (canvas.height - 18) + 8);
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      requestAnimationFrame(renderWaveform);
+    }
+
+    renderWaveform();
+  }
+
+  // Initialize first slide
+  updateSlide(0);
 });

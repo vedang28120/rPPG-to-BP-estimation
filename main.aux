@@ -1,0 +1,42 @@
+\relax 
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Visualization of the Windkessel Damping Effect: Aortic waveforms (top) demonstrate sharp systolic peaks and distinct dicrotic notches, which are smoothed into rounded sinusoidal curves (bottom) by the time the pulse wave reaches the facial microvasculature.}}{1}{}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:windkessel}{{1}{1}{}{figure.1}{}}
+\citation{wang2016pos}
+\citation{liu2020tscan}
+\citation{slapnicar2019blood}
+\citation{shradha2023regression}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Remote Photoplethysmography (rPPG) Extraction}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Deep Learning for Cuffless Blood Pressure Estimation}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}Methodology}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces End-to-End LuminaBP Pipeline Architecture: Demonstrating the transition from video acquisition, 468-point mesh tracking, POS projection, to the decoupled MODEL-06-SepHead neural network.}}{2}{}\protected@file@percent }
+\newlabel{fig:pipeline}{{2}{2}{}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Optical Signal Acquisition and Processing}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Facial Region of Interest (ROI) extraction using the 468-point MediaPipe mesh. The malar and upper forehead regions exhibit optimal microvascular density.}}{3}{}\protected@file@percent }
+\newlabel{fig:roi}{{3}{3}{}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Multi-Stage Signal Conditioning: Demonstrating the isolation of the BVP waveform and the morphological preservation achieved by the Savitzky-Golay filter.}}{3}{}\protected@file@percent }
+\newlabel{fig:sigproc}{{4}{3}{}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Decoupled Neural Architecture: MODEL-06-SepHead}{3}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces MODEL-06-SepHead Architecture: The shared temporal sequence representation is routed into distinct, mathematically decoupled dense heads for SBP and DBP regression.}}{3}{}\protected@file@percent }
+\newlabel{fig:model06}{{5}{3}{}{figure.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Experiments and Results}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Dataset and Implementation Details}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Quantitative Results and Clinical Compliance}{3}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Performance Comparison on Unseen Test Subjects}}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}AAMI SP10 and BHS Standard Compliance}{3}{}\protected@file@percent }
+\bibstyle{IEEEtran}
+\bibdata{references}
+\bibcite{wang2016pos}{1}
+\bibcite{liu2020tscan}{2}
+\bibcite{slapnicar2019blood}{3}
+\bibcite{shradha2023regression}{4}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Mean Absolute Error (MAE) Distribution Boxplots for SBP and DBP across the test cohort. The vast majority of DBP predictions fall securely within the 5 mmHg clinical error bracket.}}{4}{}\protected@file@percent }
+\newlabel{fig:boxplot}{{6}{4}{}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Statistical agreement analysis. (a) The Bland-Altman limits of agreement demonstrate tight bounds for DBP. (b) The correlation scatter plot confirms the model escapes the regression-to-the-mean trap, accurately tracking hypertensive outliers.}}{4}{}\protected@file@percent }
+\newlabel{fig:bland_altman}{{7}{4}{}{figure.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}Ablation Analysis}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{4}{}\protected@file@percent }
+\gdef \@abspage@last{4}

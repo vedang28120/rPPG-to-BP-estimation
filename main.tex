@@ -1,0 +1,41 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{LuminaBP: Non-Invasive Continuous Blood Pressure Estimation via Remote Photoplethysmography and Deep Learning}
+
+\author{\IEEEauthorblockN{Vedang Bhatt}
+\IEEEauthorblockA{\textit{Dept. of Computer Science \& Engineering} \\
+\textit{Bhilai Institute of Technology}\\
+Raipur, India}
+}
+
+\maketitle
+
+\begin{abstract}
+Hypertension is a leading global risk factor for cardiovascular diseases. Traditional arterial blood pressure (BP) assessment relies on inflatable pneumatic cuffs, which provide intermittent readings and cause physical disruption. Contactless remote photoplethysmography (rPPG) via standard RGB cameras offers an unobtrusive paradigm for continuous cardiovascular tracking. However, existing optical BP frameworks suffer from signal degradation and catastrophic regression-to-the-mean. We present LuminaBP, an end-to-end clinical machine learning framework for non-invasive BP estimation. LuminaBP utilizes Plane-Orthogonal-to-Skin (POS) chrominance projection, adaptive Savitzky-Golay polynomial smoothing, and a novel decoupled neural architecture (MODEL-06-SepHead). Evaluated on a 599-subject dataset with strict subject-independent splits, LuminaBP achieves a Diastolic BP Mean Absolute Error (MAE) of 5.91 mmHg, satisfying the ISO/AAMI SP10 clinical threshold, and a Systolic BP MAE of 10.12 mmHg. The pipeline is fully optimized for edge deployment on mobile devices.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Remote Photoplethysmography (rPPG), Cuffless Blood Pressure Estimation, Deep Learning, LuminaBP, Savitzky-Golay Denoising
+\end{IEEEkeywords}
+
+\input{sections/01_intro.tex}
+\input{sections/02_related_work.tex}
+\input{sections/03_methodology.tex}
+\input{sections/04_experiments.tex}
+\input{sections/05_conclusion.tex}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
