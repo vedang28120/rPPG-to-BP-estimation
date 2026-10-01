@@ -1,0 +1,12 @@
+{
+  "target_rate_hz": 125.0,
+  "bandpass_hz": [0.5, 8.0],
+  "ecg_bandpass_hz": [5.0, 40.0],
+  "min_recording_seconds": 20.0,
+  "min_beats": 12,
+  "pat_range_ms": [100.0, 450.0],
+  "ptt_range_ms": [20.0, 300.0],
+  "max_resample_gap_ms": 100.0,
+  "allowed_modes": ["ecg_ppg_pat", "proximal_distal_ppg_ptt"],
+  "rejected_modes": ["facial_roi_pair", "single_rppg"]
+}
